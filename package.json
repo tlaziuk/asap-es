@@ -1,0 +1,59 @@
+{
+  "name": "asap-es",
+  "version": "0.0.1",
+  "description": "asap with promise support",
+  "main": "index",
+  "private": false,
+  "scripts": {
+    "clean": "rm -v $(find . -name '*.js' -o -name '*.d.ts' | grep -v node_modules/) || exit 0",
+    "coverage": "nyc report",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "lint": "find . -name '*.ts' -print | grep -v .d.ts | grep -v node_modules/ | xargs tslint -t verbose",
+    "nyc": "nyc",
+    "prepublishOnly": "npm run tsc",
+    "pretest": "npm run clean && npm run lint && npm run tsc -- --noEmit",
+    "test": "nyc mocha -r ts-node/register $(find . -name '*.spec.ts' | grep -v node_modules/)",
+    "tsc": "tsc"
+  },
+  "nyc": {
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "exclude": [
+      "**/*.spec.*"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tlaziuk/asap-es.git"
+  },
+  "keywords": [
+    "asap",
+    "es",
+    "promise",
+    "asynchronous"
+  ],
+  "author": "Tomek Łaziuk <tlaziuk@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tlaziuk/asap-es/issues"
+  },
+  "homepage": "https://github.com/tlaziuk/asap-es",
+  "devDependencies": {
+    "@types/chai": "~4.0.0",
+    "@types/mocha": "~2.2.0",
+    "@types/sinon": "^2.3.0",
+    "chai": "~4.0.0",
+    "coveralls": "^2.13.0",
+    "mocha": "~2.2.0",
+    "nyc": "^11.0.0",
+    "sinon": "^2.3.0",
+    "ts-node": "^3.1.0",
+    "tslint": "^5.8.0",
+    "typescript": "~2.6.0"
+  },
+  "dependencies": {
+    "tslib": "^1.8.0"
+  }
+}

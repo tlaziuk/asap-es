@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "inlineSourceMap": false,
+    "inlineSources": false,
+    "lib": [
+      "dom",
+      "esnext"
+    ],
+    "listFiles": false,
+    "module": "commonjs",
+    "noEmitOnError": true,
+    "preserveConstEnums": false,
+    "pretty": true,
+    "removeComments": false,
+    "strict": true,
+    "target": "es5"
+  }
+}
