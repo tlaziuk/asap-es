@@ -9,7 +9,19 @@
 [![downloads](https://img.shields.io/npm/dm/asap-es.svg)](https://www.npmjs.com/package/asap-es)
 [![license](https://img.shields.io/npm/l/asap-es.svg)](https://www.npmjs.com/package/asap-es)
 
-use all advantages of queues with promises!
+Use all advantages of queues with promises!
+
+## why
+
+The main goal is to provide lightweight and modern library for queuing tasks.
+The name was inspired by the [asap](https://github.com/kriskowal/asap) library.
+There is already a few libraries with the same functionalites, but this is another one.
+| lib | async | sync | concurrency | browser | server | size | license |
+|--- |--- |--- |--- |--- |--- |--- |--- |
+| [asap-es](https://github.com/tlaziuk/asap-es) | ✓ | ✓ | ✓ | ✓ | ✓ | 2.5 kB | MIT |
+| [asap](https://github.com/kriskowal/asap) | ❌ | ✓ | ❌ | ✓ | ✓ | 848 B | MIT |
+| [d3-queue](https://github.com/d3/d3-queue) | ✓ | ✓ | ✓ | ✓ | ✓ | 968 B | BSD-3-Clause |
+| [aurelia-task-queue](https://github.com/aurelia/task-queue) | ✓ | ✓ | ❌ | ❌ | ✓ | 968 B | BSD-3-Clause |
 
 ## installation
 
