@@ -1,6 +1,6 @@
 {
   "name": "asap-es",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "asap with promise support",
   "main": "index",
   "private": false,
