@@ -48,5 +48,4 @@ const queue = new asap();
 
 queue.q(() => Promise.resolve(2)).then(console.log);
 // console >> 2
-});
 ```
