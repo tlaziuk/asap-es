@@ -9,13 +9,34 @@
 [![downloads](https://img.shields.io/npm/dm/asap-es.svg)](https://www.npmjs.com/package/asap-es)
 [![license](https://img.shields.io/npm/l/asap-es.svg)](https://www.npmjs.com/package/asap-es)
 
-use all advantages of queues with promises!
+Use all advantages of queues with promises!
 
 ## installation
 
 ``` sh
 npm install asap-es
 ```
+
+## why
+
+The main goal is to provide lightweight and modern library for queuing tasks.
+The name was inspired by the [asap](https://github.com/kriskowal/asap) library.
+There is already a few libraries with similar functionality, yet this is another one.
+
+| lib | async | sync | concurrency | browser | server | size | license |
+| ---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| [asap-es](https://github.com/tlaziuk/asap-es) | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ | 2.5 kB | MIT |
+| [asap](https://github.com/kriskowal/asap) | ✖️ | ✔️ | ✖️ | ✔️ | ✔️ | 848 B | MIT |
+| [d3-queue](https://github.com/d3/d3-queue) | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ | 968 B | BSD-3-Clause |
+| [aurelia-task-queue](https://github.com/aurelia/task-queue) | ✔️ | ✔️ | ✖️ | ✖️ | ✔️ | 3.11 kB | MIT |
+| [kueue](https://github.com/jasonkneen/kueue) | ✔️ | ✔️ | ✖️ | ✔️ | ✔️ | 555 B | Apache 2.0 |
+
+## api
+
+| name | description |
+| ---: | :--- |
+| `ASAP.prototype.concurrency` | the number of tasks to run sumulatenously (1 by default) |
+| `ASAP.prototype.enqueue(task)` | enqueue new task, returns a promise which resolves when execution of the task is returned, the task is ma function which returns a value or a promise |
 
 ## usage
 
