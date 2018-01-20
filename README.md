@@ -35,7 +35,7 @@ There is already a few libraries with similar functionality, yet this is another
 
 | name | description |
 | ---: | :--- |
-| `ASAP.prototype.c` | the number of tasks to run sumulatenously (1 by default) |
+| `ASAP.prototype.c` | the number of tasks to run simultaneously (1 by default) |
 | `ASAP.prototype.q(task)` | enqueue new task, returns a promise which resolves when execution of the task is finished |
 | _task_ | task is a function which returns a value or a promise |
 
