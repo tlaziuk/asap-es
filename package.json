@@ -1,6 +1,6 @@
 {
   "name": "asap-es",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "asap with promise support",
   "main": "index",
   "private": false,
@@ -52,8 +52,5 @@
     "ts-node": "^3.1.0",
     "tslint": "^5.8.0",
     "typescript": "~2.6.0"
-  },
-  "dependencies": {
-    "tslib": "^1.8.0"
   }
 }
