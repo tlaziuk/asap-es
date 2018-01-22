@@ -51,7 +51,10 @@ export default class ASAP {
         if (v < 1) {
             throw new Error(`concurrency can not be lower than 1`);
         }
+        // set the new concurrency level
         (this as any)[concurrency] = v;
+
+        // process the heap as concurrency level changed
         (this as any)[process]();
     }
 
