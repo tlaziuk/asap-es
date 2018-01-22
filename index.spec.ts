@@ -8,9 +8,9 @@ import {
     stub,
 } from "sinon";
 
-import ASAP from "./index";
+import ASAP, { task } from "./index";
 
-const timeout = <T>(fn: () => T | PromiseLike<T>, time: number = 0) => new Promise<T>((resolve) => {
+const timeout = <T>(fn: task<T>, time: number = 0) => new Promise<T>((resolve) => {
     setTimeout(() => {
         resolve(fn());
     }, time);
