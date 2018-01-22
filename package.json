@@ -41,10 +41,10 @@
   },
   "homepage": "https://github.com/tlaziuk/asap-es",
   "devDependencies": {
-    "@types/chai": "~4.0.0",
+    "@types/chai": "^4.0.0",
     "@types/mocha": "~2.2.0",
     "@types/sinon": "^2.3.0",
-    "chai": "~4.0.0",
+    "chai": "^4.0.0",
     "coveralls": "^2.13.0",
     "mocha": "~2.2.0",
     "nyc": "^11.0.0",
