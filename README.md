@@ -36,10 +36,10 @@ There is already a few libraries with similar functionality, yet this is another
 | name | description |
 | ---: | :--- |
 | `ASAP.prototype.c` | the number of tasks to run simultaneously (1 by default) |
-| `ASAP.prototype.q(task)` | enqueue new task, returns a promise which resolves when execution of the task is finished |
-| _task_ | task is a function which returns a value or a promise |
+| `ASAP.prototype.q(task)` | enqueue new task, returns a promise which resolves or rejects when execution of the task is finished |
+| _task_ | task is a function which may return a value or a promise (task awaits for promise completion) |
 
-## usage
+## usage example
 
 ``` typescript
 import asap from "asap-es";
@@ -48,4 +48,14 @@ const queue = new asap();
 
 queue.q(() => Promise.resolve(2)).then(console.log);
 // console >> 2
+
+queue.q(async () => {
+    // do some async things
+});
+
+
+queue.q(() => {
+    throw new Error();
+}).catch(console.error);
+// console >> error
 ```

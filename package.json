@@ -1,6 +1,7 @@
 {
+  "access": "public",
   "name": "asap-es",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "asap with promise support",
   "main": "index",
   "private": false,
