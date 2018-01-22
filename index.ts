@@ -19,7 +19,7 @@ type TComplete = WeakMap<() => Promise<any>, Promise<any>>;
 /** key for completed promises */
 const concurrency = Symbol();
 
-export default class {
+export default class ASAP {
     /**
      * array of functions which returns promises
      */
