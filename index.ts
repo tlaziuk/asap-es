@@ -1,22 +1,40 @@
+/**
+ * task function
+ *
+ * example:
+ * ``` typescript
+ * () => import("fs").then((fs) => fs.readFileSync("/path/to/a/file"));
+ * ```
+ */
 export type task<T = any> = () => T | PromiseLike<T>;
 
-/** key for heap of all promises */
+/**
+ * key for heap of all promises
+ */
 const heap = Symbol();
 type THeap = Array<() => Promise<any>>;
 
-/** key for process method */
+/**
+ * key for process method
+ */
 const process = Symbol();
 type TProcess = () => void;
 
-/** key for pending promises */
+/**
+ * key for pending promises
+ */
 const pending = Symbol();
 type TPending = THeap;
 
-/** key for completed promises */
+/**
+ * key for completed promises
+ */
 const complete = Symbol();
 type TComplete = WeakMap<() => Promise<any>, Promise<any>>;
 
-/** key for concurrency level */
+/**
+ * key for concurrency level
+ */
 const concurrency = Symbol();
 
 export default class ASAP {
@@ -46,6 +64,7 @@ export default class ASAP {
 
     /**
      * set concurrency
+     * @throws will throw an error if concurrency value is invalid
      */
     public set c(v: number) {
         if (v < 1) {
@@ -67,7 +86,15 @@ export default class ASAP {
 
     /**
      * enqueue a new task
-     * @param fn function to run
+     * @param fn task to run
+     * @returns a Promise resolves when the task gets executed
+     *
+     * example:
+     * ``` typescript
+     * for (let x of listOfUrls) {
+     *     asap.q(() => fetch(x).then((res) => res.blob())); // Promise<Blob>
+     * }
+     * ```
      */
     public q<T>(fn: task<T>): Promise<T> {
         return new Promise<T>((resolve, reject) => {
