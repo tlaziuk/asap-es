@@ -1,3 +1,6 @@
+/**
+ * task function
+ */
 export type task<T = any> = () => T | PromiseLike<T>;
 
 /** key for heap of all promises */
