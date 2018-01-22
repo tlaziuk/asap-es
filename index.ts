@@ -16,7 +16,7 @@ type TPending = THeap;
 const complete = Symbol();
 type TComplete = WeakMap<() => Promise<any>, Promise<any>>;
 
-/** key for completed promises */
+/** key for concurrency level */
 const concurrency = Symbol();
 
 export default class {
