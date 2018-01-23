@@ -96,11 +96,11 @@ export default class ASAP {
      * }
      * ```
      */
-    public q<T>(fn: task<T>): Promise<T> {
+    public q<T>(fn: task<T> | PromiseLike<task<T>>): Promise<T> {
         return new Promise<T>((resolve, reject) => {
             const promFn = () => {
                 // create a new promise in case when the `fn` throws anything
-                const prom = new Promise<T>((result) => { result(fn()); });
+                const prom = Promise.resolve(fn).then((v) => v());
 
                 // react on `fn` resolution and set the promise as completed
                 return prom.then(resolve, reject).then(() => { (this as any)[complete].set(promFn, prom); });
