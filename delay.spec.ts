@@ -23,7 +23,8 @@ describe(delay.name || "delay", () => {
     });
     it("should be working with functions", async () => {
         const spyFn = spy(() => "abc");
-        expect(await delay(0, spyFn)).to.be.equal("abc");
+        await delay(0, spyFn);
+        expect(spyFn.callCount).to.be.equal(1);
     });
     it("should run the functions in proper order", async () => {
         const spyFn1 = spy();
