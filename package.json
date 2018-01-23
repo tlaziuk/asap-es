@@ -31,8 +31,10 @@
   },
   "keywords": [
     "asap",
-    "es",
+    "queue",
+    "task-queue",
     "promise",
+    "async",
     "asynchronous"
   ],
   "author": "Tomek Łaziuk <tlaziuk@gmail.com>",
