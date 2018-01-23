@@ -10,11 +10,7 @@ import {
 
 import ASAP, { task } from "./index";
 
-const timeout = <T>(fn: task<T>, time: number = 0) => new Promise<T>((resolve) => {
-    setTimeout(() => {
-        resolve(fn());
-    }, time);
-});
+import delay from "./delay";
 
 describe(ASAP.name, () => {
     it("should be a class", () => {
@@ -57,27 +53,27 @@ describe(ASAP.name, () => {
     it("should the queue run two slow tasks", async () => {
         const asap = new ASAP();
         await Promise.all([
-            asap.q(() => timeout(() => void 0, 50)),
-            asap.q(() => timeout(() => void 0, 50)),
+            asap.q(() => delay(50)),
+            asap.q(() => delay(50)),
         ]);
     }).timeout(110);
     it("should the queue run two slow tasks - concurrency", async () => {
         const asap = new ASAP();
         asap.c = 2;
         await Promise.all([
-            asap.q(() => timeout(() => void 0, 50)),
-            asap.q(() => timeout(() => void 0, 50)),
+            asap.q(() => delay(50)),
+            asap.q(() => delay(50)),
         ]);
     }).timeout(60);
     it("should the queue run slow tasks with unmatching concurrency to the tasks number", async () => {
         const asap = new ASAP();
         asap.c = 2;
         await Promise.all([
-            asap.q(() => timeout(() => void 0, 50)),
-            asap.q(() => timeout(() => void 0, 50)),
-            asap.q(() => timeout(() => void 0, 50)),
-            asap.q(() => timeout(() => void 0, 50)),
-            asap.q(() => timeout(() => void 0, 50)),
+            asap.q(() => delay(50)),
+            asap.q(() => delay(50)),
+            asap.q(() => delay(50)),
+            asap.q(() => delay(50)),
+            asap.q(() => delay(50)),
         ]);
     }).timeout(160);
     it("should the queue run when on stress", async () => {
