@@ -25,7 +25,7 @@ There is already a few libraries with similar functionality, yet this is another
 
 | lib | async | sync | concurrency | browser | server | size | license |
 | ---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| [asap-es](https://github.com/tlaziuk/asap-es) | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ | 645 B | MIT |
+| [asap-es](https://github.com/tlaziuk/asap-es) | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ | 652 B | MIT |
 | [asap](https://github.com/kriskowal/asap) | ✖️ | ✔️ | ✖️ | ✔️ | ✔️ | 848 B | MIT |
 | [d3-queue](https://github.com/d3/d3-queue) | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ | 968 B | BSD-3-Clause |
 | [aurelia-task-queue](https://github.com/aurelia/task-queue) | ✔️ | ✔️ | ✖️ | ✖️ | ✔️ | 3.11 kB | MIT |
@@ -43,6 +43,7 @@ There is already a few libraries with similar functionality, yet this is another
 
 ``` typescript
 import asap from "asap-es";
+import delay from "asap-es/delay";
 
 const queue = new asap();
 
@@ -53,7 +54,13 @@ queue.q(async () => {
     // do some async things
 });
 
+// set concurrency
+queue.c = 2;
 
+// delay execution of a task by 20 ms
+queue.q(delay(20, () => void 0));
+
+// handle errors
 queue.q(() => {
     throw new Error();
 }).catch(console.error);
