@@ -44,12 +44,16 @@ There is already a few libraries with similar functionality, yet this is another
 ``` typescript
 import asap from "asap-es";
 import delay from "asap-es/delay";
+import timeout from "asap-es/timeout";
 
+// you can have many independent queues
 const queue = new asap();
 
+// promises
 queue.q(() => Promise.resolve(2)).then(console.log);
 // console >> 2
 
+// async functions
 queue.q(async () => {
     // do some async things
 });
@@ -65,4 +69,14 @@ queue.q(() => {
     throw new Error();
 }).catch(console.error);
 // console >> error
+
+// timeout a task after given time
+queue.q(timeout(200, () => {
+    // a long task
+}));
+
+// combine delay and timeout
+queue.q(delay(10, timeout(5, () => {
+    // this task waits 10 ms for execution, then timeouts in 5 ms
+})))
 ```
