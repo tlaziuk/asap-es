@@ -45,7 +45,7 @@ describe(timeout.name || "timeout", () => {
         const taskNew = timeout(0, task);
         expect(await taskNew()).to.be.equal("abc");
     });
-    it("should the timeout rejection be instance of 'Error'", async () => {
+    it("should rejection be instance of 'Error'", async () => {
         const task = () => delay(10, "abc");
         const taskNew = timeout(0, task);
         let err;
@@ -61,8 +61,20 @@ describe(timeout.name || "timeout", () => {
         const taskNew = timeout(10, task);
         taskNew().catch(() => done());
     });
-    it("should the timeout be working in a queue", async () => {
+    it("should be working in a queue", async () => {
         const queue = new ASAP();
         expect(await queue.q(timeout(10, () => delay(5, "abc")))).to.be.equal("abc");
+    });
+    it("should reject if task throws", async () => {
+        const task = () => { throw new Error("error"); };
+        const taskNew = timeout(10, task);
+        let err;
+        try {
+            await taskNew();
+        } catch (e) {
+            err = e;
+        }
+        expect(err).to.be.instanceOf(Error);
+        expect((err as Error).message).to.be.equal("error");
     });
 });
