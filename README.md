@@ -1,10 +1,11 @@
 # asap-es
 
-[![Build Status](https://travis-ci.org/tlaziuk/asap-es.svg?branch=master)](https://travis-ci.org/tlaziuk/asap-es)
-[![Coverage Status](https://coveralls.io/repos/github/tlaziuk/asap-es/badge.svg?branch=master)](https://coveralls.io/github/tlaziuk/asap-es?branch=master)
-[![dependencies Status](https://david-dm.org/tlaziuk/asap-es/status.svg)](https://david-dm.org/tlaziuk/asap-es)
-[![devDependencies Status](https://david-dm.org/tlaziuk/asap-es/dev-status.svg)](https://david-dm.org/tlaziuk/asap-es?type=dev)
-[![peerDependencies Status](https://david-dm.org/tlaziuk/asap-es/peer-status.svg)](https://david-dm.org/tlaziuk/asap-es?type=peer)
+[![build](https://img.shields.io/travis/tlaziuk/asap-es/master.svg)](https://travis-ci.org/tlaziuk/asap-es)
+[![coverage](https://img.shields.io/coveralls/github/tlaziuk/asap-es/master.svg)](https://coveralls.io/github/tlaziuk/asap-es?branch=master)
+[![dependencies](https://img.shields.io/david/tlaziuk/asap-es.svg)](https://david-dm.org/tlaziuk/asap-es)
+[![dev-dependencies](https://img.shields.io/david/dev/tlaziuk/asap-es.svg)](https://david-dm.org/tlaziuk/asap-es?type=dev)
+[![optional-dependencies](https://img.shields.io/david/optional/tlaziuk/asap-es.svg)](https://david-dm.org/tlaziuk/asap-es?type=optional)
+[![peer-dependencies](https://img.shields.io/david/peer/tlaziuk/asap-es.svg)](https://david-dm.org/tlaziuk/asap-es?type=peer)
 [![version](https://img.shields.io/npm/v/asap-es.svg)](https://www.npmjs.com/package/asap-es)
 [![downloads](https://img.shields.io/npm/dm/asap-es.svg)](https://www.npmjs.com/package/asap-es)
 [![license](https://img.shields.io/npm/l/asap-es.svg)](https://www.npmjs.com/package/asap-es)
