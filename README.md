@@ -25,11 +25,11 @@ There is already a few libraries with similar functionality, yet this is another
 
 | lib | async | sync | concurrency | browser | server | size | license |
 | ---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| [![asap-es](https://img.shields.io/npm/v/asap-es.svg?label=asap-es)](https://github.com/tlaziuk/asap-es) | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ | 652 B | ![license](https://img.shields.io/npm/l/asap-es.svg) |
-| [![asap](https://img.shields.io/npm/v/asap.svg?label=asap)](https://github.com/kriskowal/asap) | ✖️ | ✔️ | ✖️ | ✔️ | ✔️ | 848 B | ![license](https://img.shields.io/npm/l/asap.svg) |
-| [![d3-queue](https://img.shields.io/npm/v/d3-queue.svg?label=d3-queue)](https://github.com/d3/d3-queue) | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ | 968 B | ![license](https://img.shields.io/npm/l/d3-queue.svg) |
-| [![aurelia-task-queue](https://img.shields.io/npm/v/aurelia-task-queue.svg?label=aurelia-task-queue)](https://github.com/aurelia/task-queue) | ✔️ | ✔️ | ✖️ | ✖️ | ✔️ | 3.11 kB | ![license](https://img.shields.io/npm/l/aurelia-task-queue.svg) |
-| [![kueue](https://img.shields.io/npm/v/kueue.svg?label=kueue)](https://github.com/jasonkneen/kueue) | ✔️ | ✔️ | ✖️ | ✔️ | ✔️ | 555 B | ![license](https://img.shields.io/npm/l/kueue.svg) |
+| [![asap-es](https://img.shields.io/npm/v/asap-es.svg?label=asap-es)](https://github.com/tlaziuk/asap-es) | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ | ![size](https://img.shields.io/bundlephobia/minzip/asap-es.svg) | ![license](https://img.shields.io/npm/l/asap-es.svg) |
+| [![asap](https://img.shields.io/npm/v/asap.svg?label=asap)](https://github.com/kriskowal/asap) | ✖️ | ✔️ | ✖️ | ✔️ | ✔️ | ![size](https://img.shields.io/bundlephobia/minzip/asap.svg) | ![license](https://img.shields.io/npm/l/asap.svg) |
+| [![d3-queue](https://img.shields.io/npm/v/d3-queue.svg?label=d3-queue)](https://github.com/d3/d3-queue) | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ | ![size](https://img.shields.io/bundlephobia/minzip/d3-queue.svg) | ![license](https://img.shields.io/npm/l/d3-queue.svg) |
+| [![aurelia-task-queue](https://img.shields.io/npm/v/aurelia-task-queue.svg?label=aurelia-task-queue)](https://github.com/aurelia/task-queue) | ✔️ | ✔️ | ✖️ | ✖️ | ✔️ | ![size](https://img.shields.io/bundlephobia/minzip/aurelia-task-queue.svg) | ![license](https://img.shields.io/npm/l/aurelia-task-queue.svg) |
+| [![kueue](https://img.shields.io/npm/v/kueue.svg?label=kueue)](https://github.com/jasonkneen/kueue) | ✔️ | ✔️ | ✖️ | ✔️ | ✔️ | ![size](https://img.shields.io/bundlephobia/minzip/kueue.svg) | ![license](https://img.shields.io/npm/l/kueue.svg) |
 
 ## api
 
