@@ -9,6 +9,7 @@
 [![version](https://img.shields.io/npm/v/asap-es.svg)](https://www.npmjs.com/package/asap-es)
 [![downloads](https://img.shields.io/npm/dm/asap-es.svg)](https://www.npmjs.com/package/asap-es)
 [![license](https://img.shields.io/npm/l/asap-es.svg)](https://www.npmjs.com/package/asap-es)
+[![maintainability](https://img.shields.io/codeclimate/maintainability/tlaziuk/asap-es.svg)](https://codeclimate.com/github/tlaziuk/asap-es)
 
 Use all advantages of queues with promises!
 
