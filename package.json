@@ -2,7 +2,7 @@
   "access": "public",
   "name": "asap-es",
   "version": "1.2.0",
-  "description": "asap with promise support",
+  "description": "asynchronous function queue runner",
   "main": "index",
   "private": false,
   "scripts": {
