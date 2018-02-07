@@ -11,7 +11,7 @@
 [![license](https://img.shields.io/npm/l/asap-es.svg)](https://www.npmjs.com/package/asap-es)
 [![maintainability](https://img.shields.io/codeclimate/maintainability/tlaziuk/asap-es.svg)](https://codeclimate.com/github/tlaziuk/asap-es)
 
-Use all advantages of queues with promises!
+Asynchronous function queue runner!
 
 ## installation
 
@@ -32,6 +32,8 @@ There is already a few libraries with similar functionality, yet this is another
 | [![d3-queue](https://img.shields.io/npm/v/d3-queue.svg?label=d3-queue)](https://github.com/d3/d3-queue) | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ | ![size](https://img.shields.io/bundlephobia/minzip/d3-queue.svg) | ![license](https://img.shields.io/npm/l/d3-queue.svg) |
 | [![aurelia-task-queue](https://img.shields.io/npm/v/aurelia-task-queue.svg?label=aurelia-task-queue)](https://github.com/aurelia/task-queue) | ✔️ | ✔️ | ✖️ | ✖️ | ✔️ | ![size](https://img.shields.io/bundlephobia/minzip/aurelia-task-queue.svg) | ![license](https://img.shields.io/npm/l/aurelia-task-queue.svg) |
 | [![kueue](https://img.shields.io/npm/v/kueue.svg?label=kueue)](https://github.com/jasonkneen/kueue) | ✔️ | ✔️ | ✖️ | ✔️ | ✔️ | ![size](https://img.shields.io/bundlephobia/minzip/kueue.svg) | ![license](https://img.shields.io/npm/l/kueue.svg) |
+| [![queue](https://img.shields.io/npm/v/queue.svg?label=queue)](https://github.com/jessetane/queue) | ✔️ | ✔️ | ✖️ | ✔️ | ✔️ | ![size](https://img.shields.io/bundlephobia/minzip/queue.svg) | ![license](https://img.shields.io/npm/l/queue.svg) |
+| [![run-queue](https://img.shields.io/npm/v/run-queue.svg?label=run-queue)](https://github.com/iarna/run-queue) | ✔️ | ✔️ | ✖️ | ✔️ | ✔️ | ![size](https://img.shields.io/bundlephobia/minzip/run-queue.svg) | ![license](https://img.shields.io/npm/l/run-queue.svg) |
 
 ## api
 
