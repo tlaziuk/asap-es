@@ -17,7 +17,16 @@ describe(ASAP.name, () => {
         expect(ASAP).to.be.a("function");
     });
     it("should be possible to create an instance", () => {
-        expect(new ASAP()).to.be.a("object");
+        const queue = new ASAP();
+        expect(queue).to.be.instanceof(ASAP);
+    });
+    it("should be possible to create an instance by call", () => {
+        const queue = ASAP();
+        expect(queue).to.be.instanceof(ASAP);
+    });
+    it("should the default concurrency be set", () => {
+        const asap = new ASAP();
+        expect(asap.c).to.be.equal(1);
     });
     it("should concurrency be working", () => {
         const asap = new ASAP();

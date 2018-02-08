@@ -1,7 +1,7 @@
 {
   "access": "public",
   "name": "asap-es",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "asynchronous function queue runner",
   "main": "index",
   "private": false,
@@ -54,6 +54,6 @@
     "sinon": "^4.0.0",
     "ts-node": "^4.0.0",
     "tslint": "^5.8.0",
-    "typescript": "~2.6.0"
+    "typescript": "~2.7.0"
   }
 }
