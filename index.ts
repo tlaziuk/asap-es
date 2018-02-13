@@ -18,7 +18,7 @@ export interface IASAP {
     /**
      * enqueue a new task
      * @param fn task to run
-     * @param priority task priority
+     * @param priority task priority, smaller value means higher priority
      * @returns a Promise resolves when the task gets executed
      *
      * example:
@@ -50,36 +50,37 @@ function ASAP(this: any): any {
     const heap = [] as Array<[() => Promise<any>, number]>;
 
     /**
-     * WeakMap of resolved or rejected promises
+     * Set of resolved or rejected promise methods
      */
-    const complete = new WeakMap<() => Promise<any>, Promise<any>>();
+    const complete = new Set<() => Promise<any>>();
 
     /**
-     * array of pending/running promise methods
+     * Set of pending/running promise methods
      */
-    const pending = [] as Array<() => Promise<any>>;
+    const pending = new Set<() => Promise<any>>();
 
     /**
      * process the queue
      */
     const process = (): void => {
-        if (pending.filter((v) => v).length < concurrency) {
+        if (pending.size < concurrency) {
             heap.filter(
                 // filter the heap to get only not completed nor pending (running) tasks
-                ([v]) => !complete.has(v) && pending.indexOf(v) < 0,
+                ([v]) => !complete.has(v) && !pending.has(v),
             ).sort(
+                // sort the heap from highest to lowest priority
                 ([, a], [, b]) => a - b,
             ).slice(
                 0,
                 concurrency, // slice the array to the size of concurrency value
             ).forEach(([v]) => {
                 // mark the promise function as pending
-                pending.push(v);
+                pending.add(v);
 
                 v().then(
                     () => {
                         // delete the promise function from pending list
-                        delete pending[pending.indexOf(v)];
+                        pending.delete(v);
 
                         // process the task list as this task has just finished
                         process();
@@ -109,7 +110,7 @@ function ASAP(this: any): any {
                     const prom = Promise.resolve(fn).then((v) => v());
 
                     // react on `fn` resolution and set the promise as completed
-                    return prom.then(resolve, reject).then(() => { complete.set(promFn, prom); });
+                    return prom.then(resolve, reject).then(() => { complete.add(promFn); });
                 };
 
                 // push the promise function and priority to the task list

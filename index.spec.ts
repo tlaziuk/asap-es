@@ -77,6 +77,29 @@ describe(ASAP.name, () => {
             asap.q(() => void 0),
         ]);
     });
+    it("should run same task", async () => {
+        const asap = new ASAP();
+        const spyFn = spy(() => delay(10));
+        await Promise.all([
+            asap.q(spyFn),
+            asap.q(spyFn),
+            asap.q(spyFn),
+            asap.q(spyFn),
+        ]);
+        expect(spyFn.callCount).to.be.equal(4);
+    }).timeout(50);
+    it("should run same task with concurrency", async () => {
+        const asap = new ASAP();
+        asap.c = Infinity;
+        const spyFn = spy(() => delay(10));
+        await Promise.all([
+            asap.q(spyFn),
+            asap.q(spyFn),
+            asap.q(spyFn),
+            asap.q(spyFn),
+        ]);
+        expect(spyFn.callCount).to.be.equal(4);
+    }).timeout(20);
     it("should the queue run in proper order", async () => {
         const asap = new ASAP();
         const spyFn1 = spy();
@@ -152,7 +175,7 @@ describe(ASAP.name, () => {
             expect(promSpy.callCount).to.be.equal(1);
         }));
     }).timeout(1e4);
-    it("should the task priorities be working without concurrency", async () => {
+    it("should the task priorities be working", async () => {
         const asap = new ASAP();
         const spyFn1 = spy(() => delay(5));
         const spyFn2 = spy(() => delay(5));
