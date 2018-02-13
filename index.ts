@@ -49,34 +49,34 @@ function ASAP(this: any): any {
     const heap = [] as Array<() => Promise<any>>;
 
     /**
-     * WeakMap of resolved or rejected promises
+     * Set of resolved or rejected promise methods
      */
-    const complete = new WeakMap<() => Promise<any>, Promise<any>>();
+    const complete = new Set<() => Promise<any>>();
 
     /**
-     * array of pending/running promise methods
+     * Set of pending/running promise methods
      */
-    const pending = [] as Array<() => Promise<any>>;
+    const pending = new Set<() => Promise<any>>();
 
     /**
      * process the queue
      */
     const process = (): void => {
-        if (pending.filter((v) => v).length < concurrency) {
+        if (pending.size < concurrency) {
             heap.filter(
                 // filter the heap to get only not completed nor pending (running) tasks
-                (v) => !complete.has(v) && pending.indexOf(v) < 0,
+                (v) => !complete.has(v) && !pending.has(v),
             ).slice(
                 0,
                 concurrency, // slice the array to the size of concurrency value
             ).forEach((v) => {
                 // mark the promise function as pending
-                pending.push(v);
+                pending.add(v);
 
                 v().then(
                     () => {
                         // delete the promise function from pending list
-                        delete pending[pending.indexOf(v)];
+                        pending.delete(v);
 
                         // process the task list as this task has just finished
                         process();
@@ -106,7 +106,7 @@ function ASAP(this: any): any {
                     const prom = Promise.resolve(fn).then((v) => v());
 
                     // react on `fn` resolution and set the promise as completed
-                    return prom.then(resolve, reject).then(() => { complete.set(promFn, prom); });
+                    return prom.then(resolve, reject).then(() => { complete.add(promFn); });
                 };
 
                 // push the promise function to the task list
