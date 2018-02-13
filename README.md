@@ -23,22 +23,22 @@ The main goal is to provide lightweight and modern library for queuing tasks.
 The name was inspired by the [asap](https://github.com/kriskowal/asap) library.
 There is already a few libraries with similar functionality, yet this is another one.
 
-| lib | async | sync | concurrency | browser | server | size | license |
+| lib | async | sync | concurrency | priority | size | license |
 | ---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| [asap-es](https://github.com/tlaziuk/asap-es) | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ | 652 B | MIT |
-| [asap](https://github.com/kriskowal/asap) | ✖️ | ✔️ | ✖️ | ✔️ | ✔️ | 848 B | MIT |
-| [d3-queue](https://github.com/d3/d3-queue) | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ | 968 B | BSD-3-Clause |
-| [aurelia-task-queue](https://github.com/aurelia/task-queue) | ✔️ | ✔️ | ✖️ | ✖️ | ✔️ | 3.11 kB | MIT |
-| [kueue](https://github.com/jasonkneen/kueue) | ✔️ | ✔️ | ✖️ | ✔️ | ✔️ | 555 B | Apache 2.0 |
+| [asap-es](https://github.com/tlaziuk/asap-es) | ✔️ | ✔️ | ✔️ | ✔️ |  652 B | MIT |
+| [asap](https://github.com/kriskowal/asap) | ✖️ | ✔️ | ✖️ | ✖️ | 848 B | MIT |
+| [d3-queue](https://github.com/d3/d3-queue) | ✔️ | ✔️ | ✔️ | ✖️ | 968 B | BSD-3-Clause |
+| [aurelia-task-queue](https://github.com/aurelia/task-queue) | ✔️ | ✔️ | ✖️ | ✖️ | 3.11 kB | MIT |
+| [kueue](https://github.com/jasonkneen/kueue) | ✔️ | ✔️ | ✖️ | ✖️ | 555 B | Apache 2.0 |
 
 ## api
 
 | name | description |
 | ---: | :--- |
-| `new <ctor>()` | create new _asap-es_ instance, concurrency can be passed as argument |
-| `<ctor>()` | same as above |
+| `new <ctor>(c)` | create new _asap-es_ instance, optinal concurrency can be passed as argument |
+| `<ctor>(c)` | same as above |
 | `<instance>.c` | the number of tasks to run simultaneously (`1` by default), set to `< 1` to pause the queue |
-| `<instance>.q(task)` | enqueue new task, returns a promise which resolves or rejects when execution of the task is finished |
+| `<instance>.q(task, priority)` | enqueue a new _task_, returns a promise which resolves or rejects when execution of the task is finished, optionally pass _priority_ |
 | _task_ | task is a function which may return a value or a promise (task awaits for promise completion) |
 
 ## usage example
@@ -68,6 +68,9 @@ queue.c = 0;
 queue.q(async () => {
     // do some async things
 });
+
+// task with higher priority
+queue.q(() => void 0, -1);
 
 // set concurrency and resume the queue
 queue.c = 2;
