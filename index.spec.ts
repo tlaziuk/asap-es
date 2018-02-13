@@ -80,13 +80,14 @@ describe(ASAP.name, () => {
     it("should run same task", async () => {
         const asap = new ASAP();
         const spyFn = spy(() => delay(10));
-        await Promise.all([
+        const proms = [
             asap.q(spyFn),
             asap.q(spyFn),
             asap.q(spyFn),
             asap.q(spyFn),
-        ]);
-        expect(spyFn.callCount).to.be.equal(4);
+        ];
+        await Promise.all(proms);
+        expect(spyFn.callCount).to.be.equal(proms.length, "task not called as many times as expected");
     }).timeout(50);
     it("should run same task with concurrency", async () => {
         const asap = new ASAP();
