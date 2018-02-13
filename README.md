@@ -26,7 +26,7 @@ The name was inspired by the [asap](https://github.com/kriskowal/asap) library.
 There is already a few libraries with similar functionality, yet this is another one.
 
 | lib | async | sync | concurrency | priority | size | license |
-| ---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| ---: | :---: | :---: | :---: | :---: | :---: | :--- |
 | [![asap-es](https://img.shields.io/npm/v/asap-es.svg?label=asap-es)](https://github.com/tlaziuk/asap-es) | ✔️ | ✔️ | ✔️ | ✔️ | ![size](https://img.shields.io/bundlephobia/minzip/asap-es.svg) | ![license](https://img.shields.io/npm/l/asap-es.svg) |
 | [![asap](https://img.shields.io/npm/v/asap.svg?label=asap)](https://github.com/kriskowal/asap) | ✖️ | ✔️ | ✖️ | ✖️ | ![size](https://img.shields.io/bundlephobia/minzip/asap.svg) | ![license](https://img.shields.io/npm/l/asap.svg) |
 | [![d3-queue](https://img.shields.io/npm/v/d3-queue.svg?label=d3-queue)](https://github.com/d3/d3-queue) | ✔️ | ✔️ | ✔️ | ✖️ | ![size](https://img.shields.io/bundlephobia/minzip/d3-queue.svg) | ![license](https://img.shields.io/npm/l/d3-queue.svg) |
