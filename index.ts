@@ -10,8 +10,9 @@ export type task<T = any> = () => T | PromiseLike<T>;
 
 export interface IASAP {
     /**
-     * concurrency value
-     * @throws will throw an error if concurrency value is invalid
+     * concurrency level
+     *
+     * `< 1` to pause the instance, `>= 1` otherwise
      */
     c: number;
 
@@ -30,18 +31,18 @@ export interface IASAP {
     q<T>(fn: task<T> | PromiseLike<task<T>>): Promise<T>;
 }
 
-function ASAP(this: any): any {
+function ASAP(this: any, c: boolean | number = 1): any {
     /**
      * check if this function is used as a constructor
      */
     if (!(this instanceof ASAP)) {
-        return new (ASAP as any)();
+        return new (ASAP as any)(c);
     }
 
     /**
-     * key for concurrency level
+     * concurrency level
      */
-    let concurrency: number = 1;
+    let concurrency: number;
 
     /**
      * array of functions which returns promises
@@ -90,11 +91,9 @@ function ASAP(this: any): any {
         c: {
             get: () => concurrency,
             set: (value: number) => {
-                if (value < 1) {
-                    throw new Error("concurrency can not be lower than 1");
-                }
                 // set the new concurrency level
-                concurrency = value;
+                concurrency = Math.max(Math.floor(value), 0);
+
                 // process the heap as concurrency level changed
                 process();
             },
@@ -117,9 +116,18 @@ function ASAP(this: any): any {
             }),
         },
     });
+
+    // assign passed concurrency to the instance
+    this.c = c;
 }
 
 export default (ASAP as any) as {
-    new(): IASAP;
-    (): IASAP;
+    /**
+     * @param concurrency `false` or `< 1` if instance should be paused, `>= 1` for instance with given concurrency
+     */
+    new(concurrency?: boolean | number): IASAP;
+    /**
+     * @param concurrency `false` or `< 1` if instance should be paused, `>= 1` for instance with given concurrency
+     */
+    (concurrency?: boolean | number): IASAP;
 };

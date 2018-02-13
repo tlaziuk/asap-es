@@ -31,9 +31,9 @@ describe(ASAP.name, () => {
     it("should concurrency be working", () => {
         const asap = new ASAP();
         expect(() => { asap.c = 1; }).to.not.throw();
-        expect(() => { asap.c = 0; }).to.throw();
-        expect(() => { asap.c = -1; }).to.throw();
-        expect(asap.c).to.be.equal(1);
+        expect(() => { asap.c = 0; }).to.not.throw();
+        expect(() => { asap.c = -1; }).to.not.throw();
+        expect(asap.c).to.be.equal(0);
     });
     it("should the queue run", async () => {
         const spyFn = spy();
@@ -80,13 +80,14 @@ describe(ASAP.name, () => {
     it("should run same task", async () => {
         const asap = new ASAP();
         const spyFn = spy(() => delay(10));
-        await Promise.all([
+        const proms = [
             asap.q(spyFn),
             asap.q(spyFn),
             asap.q(spyFn),
             asap.q(spyFn),
-        ]);
-        expect(spyFn.callCount).to.be.equal(4);
+        ];
+        await Promise.all(proms);
+        expect(spyFn.callCount).to.be.equal(proms.length, "task not called as many times as expected");
     }).timeout(50);
     it("should run same task with concurrency", async () => {
         const asap = new ASAP();
@@ -175,4 +176,51 @@ describe(ASAP.name, () => {
             expect(promSpy.callCount).to.be.equal(1);
         }));
     }).timeout(1e4);
+    it("should default concurrency be set", () => {
+        const asap = new ASAP();
+        expect(asap.c).to.be.equal(1);
+    });
+    it("should it be possible to create the queue as paused", () => {
+        const asap1 = new ASAP(false);
+        expect(asap1.c).to.be.equal(0);
+        const asap2 = new ASAP(0);
+        expect(asap2.c).to.be.equal(0);
+        const asap3 = new ASAP(-999);
+        expect(asap3.c).to.be.equal(0);
+    });
+    it("should it be possible to create the queue with custom concurrency", () => {
+        const asap = new ASAP(999);
+        expect(asap.c).to.be.equal(999);
+    });
+    it("should it be possible to create the queue as paused and run it later", async () => {
+        const asap = new ASAP(false);
+        expect(asap.c).to.be.equal(0);
+        const spyFn1 = spy(() => delay(10));
+        const spyFn2 = spy(() => delay(10));
+        const proms = [
+            asap.q(spyFn1),
+            asap.q(spyFn2),
+        ];
+        asap.c = 1;
+        await Promise.all(proms);
+        expect(spyFn1.callCount).to.be.equal(1, "task 1 not called");
+        expect(spyFn2.callCount).to.be.equal(1, "task 2 not called");
+        expect(spyFn1.calledBefore(spyFn2)).to.be.equal(true, "tasks called in invalid order");
+    }).timeout(50);
+    it("should it be possible to pause the queue", async () => {
+        const asap = new ASAP();
+        expect(asap.c).to.be.equal(1);
+        const spyFn1 = spy(() => delay(20));
+        const spyFn2 = spy(() => delay(20));
+        asap.q(spyFn1);
+        asap.q(spyFn2);
+        expect(spyFn1.callCount).to.be.equal(0, "task 1 called");
+        expect(spyFn2.callCount).to.be.equal(0, "task 2 called");
+        await delay(10);
+        asap.c = 0;
+        expect(spyFn1.callCount).to.be.equal(1, "task 1 not called");
+        expect(spyFn2.callCount).to.be.equal(0, "task 2 called");
+        await delay(20);
+        expect(spyFn2.callCount).to.be.equal(0, "task 2 called");
+    }).timeout(100);
 });
