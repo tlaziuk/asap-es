@@ -35,8 +35,10 @@ There is already a few libraries with similar functionality, yet this is another
 
 | name | description |
 | ---: | :--- |
-| `ASAP.prototype.c` | the number of tasks to run simultaneously (1 by default) |
-| `ASAP.prototype.q(task)` | enqueue new task, returns a promise which resolves or rejects when execution of the task is finished |
+| `new <ctor>()` | create new _asap-es_ instance, concurrency can be passed as argument |
+| `<ctor>()` | same as above |
+| `<instance>.c` | the number of tasks to run simultaneously (`1` by default), set to `< 1` to pause the queue |
+| `<instance>.q(task)` | enqueue new task, returns a promise which resolves or rejects when execution of the task is finished |
 | _task_ | task is a function which may return a value or a promise (task awaits for promise completion) |
 
 ## usage example
@@ -49,16 +51,25 @@ import timeout from "asap-es/timeout";
 // you can have many independent queues
 const queue = new asap();
 
+// paused queue will not run tasks
+const queuePaused = new asap(false);
+
+// resume the queue by increasing concurrency
+queuePaused.c++;
+
 // promises
 queue.q(() => Promise.resolve(2)).then(console.log);
 // console >> 2
+
+// pause the queue
+queue.c = 0;
 
 // async functions
 queue.q(async () => {
     // do some async things
 });
 
-// set concurrency
+// set concurrency and resume the queue
 queue.c = 2;
 
 // delay execution of a task by 20 ms
