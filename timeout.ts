@@ -5,10 +5,12 @@ import { task } from ".";
  *
  * @param timeout time in milliseconds
  * @param fn task to run
+ * @param reason timeout rejection reason
  */
 export default <T = any>(
     timeout: number,
     fn: task<T> | PromiseLike<task<T>>,
+    reason?: string,
 ): (() => Promise<T>) => () => Promise.resolve(fn).then(
     // run the logic when task will be ready
     (taskFn) => new Promise<T>(
@@ -19,7 +21,7 @@ export default <T = any>(
             ).then(resolve, reject);
             setTimeout(() => {
                 // reject when the timeout is reached
-                reject(new Error());
+                reject(new Error(reason));
             }, timeout);
         },
     ),
