@@ -14,7 +14,7 @@ describe(timeout.name || "timeout", () => {
     it("should return a 'function'", () => {
         expect(timeout(0, () => void 0)).to.be.a("function");
     });
-    it("should the task function be callled", async () => {
+    it("should the task function be called", async () => {
         const taskSpy = spy();
         const taskNew = timeout(0, taskSpy);
         try {
@@ -76,5 +76,16 @@ describe(timeout.name || "timeout", () => {
         }
         expect(err).to.be.instanceOf(Error);
         expect((err as Error).message).to.be.equal("error");
+    });
+    it("should reject on timeout with custom reason", async () => {
+        const task = timeout(10, () => delay(20, "abc"), "timeout");
+        const queue = new ASAP();
+        await queue.q(task).then(
+            () => { throw new Error(); },
+            (reason) => {
+                expect(reason).to.be.instanceOf(Error);
+                expect(reason).to.have.property("message").equal("timeout");
+            },
+        );
     });
 });
