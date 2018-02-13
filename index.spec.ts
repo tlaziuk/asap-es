@@ -152,4 +152,64 @@ describe(ASAP.name, () => {
             expect(promSpy.callCount).to.be.equal(1);
         }));
     }).timeout(1e4);
+    it("should the task priorities be working without concurrency", async () => {
+        const asap = new ASAP();
+        const spyFn1 = spy(() => delay(5));
+        const spyFn2 = spy(() => delay(5));
+        const spyFn3 = spy(() => delay(5));
+        const spyFn4 = spy(() => delay(5));
+        const spyFn5 = spy(() => delay(5));
+        const spyFn6 = spy(() => delay(5));
+        const spyFn7 = spy(() => delay(5));
+        await Promise.all([
+            asap.q(spyFn1),
+            asap.q(spyFn2, 3),
+            asap.q(spyFn3, 22),
+            asap.q(spyFn4, 1),
+            asap.q(spyFn5, -1),
+            asap.q(spyFn6, -65),
+            asap.q(spyFn7, 0),
+        ]);
+        expect(spyFn1.calledBefore(spyFn5)).to.be.equal(true);
+        expect(spyFn1.calledBefore(spyFn6)).to.be.equal(true);
+        expect(spyFn1.calledBefore(spyFn7)).to.be.equal(true);
+        expect(spyFn2.calledBefore(spyFn3)).to.be.equal(true);
+        expect(spyFn3.calledAfter(spyFn6)).to.be.equal(true);
+        expect(spyFn4.calledBefore(spyFn2)).to.be.equal(true);
+        expect(spyFn5.calledBefore(spyFn3)).to.be.equal(true);
+        expect(spyFn6.calledBefore(spyFn5)).to.be.equal(true);
+        expect(spyFn7.calledBefore(spyFn2)).to.be.equal(true);
+    }).timeout(1e4);
+    it("should the task priorities be working with concurrency", async () => {
+        const asap = new ASAP();
+        asap.c = 2;
+        const spyFn1 = spy(() => delay(5));
+        const spyFn2 = spy(() => delay(5));
+        const spyFn3 = spy(() => delay(5));
+        const spyFn4 = spy(() => delay(5));
+        const spyFn5 = spy(() => delay(5));
+        const spyFn6 = spy(() => delay(5));
+        const spyFn7 = spy(() => delay(5));
+        await Promise.all([
+            asap.q(spyFn1, 3),
+            asap.q(spyFn2, 2),
+            asap.q(spyFn3, 1),
+            asap.q(spyFn4, 0),
+            asap.q(spyFn5, -1),
+            asap.q(spyFn6, -2),
+            asap.q(spyFn7, -3),
+        ]);
+        expect(spyFn1.calledBefore(spyFn3)).to.be.equal(true);
+        expect(spyFn1.calledBefore(spyFn4)).to.be.equal(true);
+        expect(spyFn2.calledBefore(spyFn3)).to.be.equal(true);
+        expect(spyFn2.calledBefore(spyFn4)).to.be.equal(true);
+        expect(spyFn7.calledBefore(spyFn3)).to.be.equal(true);
+        expect(spyFn7.calledBefore(spyFn4)).to.be.equal(true);
+        expect(spyFn6.calledBefore(spyFn3)).to.be.equal(true);
+        expect(spyFn6.calledBefore(spyFn4)).to.be.equal(true);
+        expect(spyFn5.calledBefore(spyFn3)).to.be.equal(true);
+        expect(spyFn5.calledBefore(spyFn4)).to.be.equal(true);
+        expect(spyFn7.calledAfter(spyFn1)).to.be.equal(true);
+        expect(spyFn7.calledAfter(spyFn2)).to.be.equal(true);
+    }).timeout(1e4);
 });

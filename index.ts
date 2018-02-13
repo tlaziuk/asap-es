@@ -18,6 +18,7 @@ export interface IASAP {
     /**
      * enqueue a new task
      * @param fn task to run
+     * @param priority task priority
      * @returns a Promise resolves when the task gets executed
      *
      * example:
@@ -27,7 +28,7 @@ export interface IASAP {
      * }
      * ```
      */
-    q<T>(fn: task<T> | PromiseLike<task<T>>): Promise<T>;
+    q<T>(fn: task<T> | PromiseLike<task<T>>, priority?: number): Promise<T>;
 }
 
 function ASAP(this: any): any {
@@ -46,7 +47,7 @@ function ASAP(this: any): any {
     /**
      * array of functions which returns promises
      */
-    const heap = [] as Array<() => Promise<any>>;
+    const heap = [] as Array<[() => Promise<any>, number]>;
 
     /**
      * WeakMap of resolved or rejected promises
@@ -65,11 +66,13 @@ function ASAP(this: any): any {
         if (pending.filter((v) => v).length < concurrency) {
             heap.filter(
                 // filter the heap to get only not completed nor pending (running) tasks
-                (v) => !complete.has(v) && pending.indexOf(v) < 0,
+                ([v]) => !complete.has(v) && pending.indexOf(v) < 0,
+            ).sort(
+                ([, a], [, b]) => a - b,
             ).slice(
                 0,
                 concurrency, // slice the array to the size of concurrency value
-            ).forEach((v) => {
+            ).forEach(([v]) => {
                 // mark the promise function as pending
                 pending.push(v);
 
@@ -100,7 +103,7 @@ function ASAP(this: any): any {
             },
         },
         q: {
-            value: <T>(fn: task<T> | PromiseLike<task<T>>) => new Promise<T>((resolve, reject) => {
+            value: <T>(fn: task<T> | PromiseLike<task<T>>, priority?: number) => new Promise<T>((resolve, reject) => {
                 const promFn = () => {
                     // create a new promise in case when the `fn` throws anything
                     const prom = Promise.resolve(fn).then((v) => v());
@@ -109,8 +112,8 @@ function ASAP(this: any): any {
                     return prom.then(resolve, reject).then(() => { complete.set(promFn, prom); });
                 };
 
-                // push the promise function to the task list
-                heap.push(promFn);
+                // push the promise function and priority to the task list
+                heap.push([promFn, priority || 0]);
 
                 // process the task list
                 process();
