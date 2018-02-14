@@ -1,15 +1,17 @@
 # asap-es
 
-[![Build Status](https://travis-ci.org/tlaziuk/asap-es.svg?branch=master)](https://travis-ci.org/tlaziuk/asap-es)
-[![Coverage Status](https://coveralls.io/repos/github/tlaziuk/asap-es/badge.svg?branch=master)](https://coveralls.io/github/tlaziuk/asap-es?branch=master)
-[![dependencies Status](https://david-dm.org/tlaziuk/asap-es/status.svg)](https://david-dm.org/tlaziuk/asap-es)
-[![devDependencies Status](https://david-dm.org/tlaziuk/asap-es/dev-status.svg)](https://david-dm.org/tlaziuk/asap-es?type=dev)
-[![peerDependencies Status](https://david-dm.org/tlaziuk/asap-es/peer-status.svg)](https://david-dm.org/tlaziuk/asap-es?type=peer)
-[![npm version](https://badge.fury.io/js/asap-es.svg)](https://badge.fury.io/js/asap-es)
+[![build](https://img.shields.io/travis/tlaziuk/asap-es/master.svg)](https://travis-ci.org/tlaziuk/asap-es)
+[![coverage](https://img.shields.io/coveralls/github/tlaziuk/asap-es/master.svg)](https://coveralls.io/github/tlaziuk/asap-es?branch=master)
+[![dependencies](https://img.shields.io/david/tlaziuk/asap-es.svg)](https://david-dm.org/tlaziuk/asap-es)
+[![dev-dependencies](https://img.shields.io/david/dev/tlaziuk/asap-es.svg)](https://david-dm.org/tlaziuk/asap-es?type=dev)
+[![optional-dependencies](https://img.shields.io/david/optional/tlaziuk/asap-es.svg)](https://david-dm.org/tlaziuk/asap-es?type=optional)
+[![peer-dependencies](https://img.shields.io/david/peer/tlaziuk/asap-es.svg)](https://david-dm.org/tlaziuk/asap-es?type=peer)
+[![version](https://img.shields.io/npm/v/asap-es.svg)](https://www.npmjs.com/package/asap-es)
 [![downloads](https://img.shields.io/npm/dm/asap-es.svg)](https://www.npmjs.com/package/asap-es)
 [![license](https://img.shields.io/npm/l/asap-es.svg)](https://www.npmjs.com/package/asap-es)
+[![maintainability](https://img.shields.io/codeclimate/maintainability/tlaziuk/asap-es.svg)](https://codeclimate.com/github/tlaziuk/asap-es)
 
-Use all advantages of queues with promises!
+a queue runner with priorities, concurrency and promises
 
 ## installation
 
@@ -24,12 +26,14 @@ The name was inspired by the [asap](https://github.com/kriskowal/asap) library.
 There is already a few libraries with similar functionality, yet this is another one.
 
 | lib | async | sync | concurrency | priority | size | license |
-| ---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| [asap-es](https://github.com/tlaziuk/asap-es) | ✔️ | ✔️ | ✔️ | ✔️ |  652 B | MIT |
-| [asap](https://github.com/kriskowal/asap) | ✖️ | ✔️ | ✖️ | ✖️ | 848 B | MIT |
-| [d3-queue](https://github.com/d3/d3-queue) | ✔️ | ✔️ | ✔️ | ✖️ | 968 B | BSD-3-Clause |
-| [aurelia-task-queue](https://github.com/aurelia/task-queue) | ✔️ | ✔️ | ✖️ | ✖️ | 3.11 kB | MIT |
-| [kueue](https://github.com/jasonkneen/kueue) | ✔️ | ✔️ | ✖️ | ✖️ | 555 B | Apache 2.0 |
+| ---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| [![asap-es](https://img.shields.io/npm/v/asap-es.svg?label=asap-es)](https://github.com/tlaziuk/asap-es) | ✔️ | ✔️ | ✔️ | ✔️ | ![size](https://img.shields.io/bundlephobia/minzip/asap-es.svg) | ![license](https://img.shields.io/npm/l/asap-es.svg) |
+| [![asap](https://img.shields.io/npm/v/asap.svg?label=asap)](https://github.com/kriskowal/asap) | ✖️ | ✔️ | ✖️ | ✖️ | ![size](https://img.shields.io/bundlephobia/minzip/asap.svg) | ![license](https://img.shields.io/npm/l/asap.svg) |
+| [![aurelia-task-queue](https://img.shields.io/npm/v/aurelia-task-queue.svg?label=aurelia-task-queue)](https://github.com/aurelia/task-queue) | ✔️ | ✔️ | ✖️ | ✖️ | ![size](https://img.shields.io/bundlephobia/minzip/aurelia-task-queue.svg) | ![license](https://img.shields.io/npm/l/aurelia-task-queue.svg) |
+| [![d3-queue](https://img.shields.io/npm/v/d3-queue.svg?label=d3-queue)](https://github.com/d3/d3-queue) | ✔️ | ✔️ | ✔️ | ✖️ | ![size](https://img.shields.io/bundlephobia/minzip/d3-queue.svg) | ![license](https://img.shields.io/npm/l/d3-queue.svg) |
+| [![kueue](https://img.shields.io/npm/v/kueue.svg?label=kueue)](https://github.com/jasonkneen/kueue) | ✔️ | ✔️ | ✖️ | ✖️ | ![size](https://img.shields.io/bundlephobia/minzip/kueue.svg) | ![license](https://img.shields.io/npm/l/kueue.svg) |
+| [![queue](https://img.shields.io/npm/v/queue.svg?label=queue)](https://github.com/jessetane/queue) | ✔️ | ✔️ | ✔️ | ✔️ | ![size](https://img.shields.io/bundlephobia/minzip/queue.svg) | ![license](https://img.shields.io/npm/l/queue.svg) |
+| [![run-queue](https://img.shields.io/npm/v/run-queue.svg?label=run-queue)](https://github.com/iarna/run-queue) | ✔️ | ✔️ | ✔️ | ✔️ | ![size](https://img.shields.io/bundlephobia/minzip/run-queue.svg) | ![license](https://img.shields.io/npm/l/run-queue.svg) |
 
 ## api
 
