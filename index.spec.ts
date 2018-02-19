@@ -28,7 +28,7 @@ describe(ASAP.name, () => {
         const asap = new ASAP();
         expect(asap.c).to.be.equal(1);
     });
-    it("should concurrency be working", () => {
+    it("should assigning and getting concurrency be working", () => {
         const asap = new ASAP();
         expect(() => { asap.c = 1; }).to.not.throw();
         expect(() => { asap.c = 0; }).to.not.throw();
@@ -156,7 +156,7 @@ describe(ASAP.name, () => {
         expect(spyFn3.calledBefore(spyFn5)).to.be.equal(true, "task 3 should run before task 5");
         expect(spyFn4.calledBefore(spyFn5)).to.be.equal(true, "task 4 should run before task 5");
     });
-    it("should the queue run slow tasks with unmatching concurrency to the tasks number", async () => {
+    it("should the queue run slow tasks", async () => {
         const asap = new ASAP();
         asap.c = 2;
         await Promise.all([
@@ -283,4 +283,142 @@ describe(ASAP.name, () => {
         await delay(20);
         expect(spyFn2.callCount).to.be.equal(0, "task 2 called");
     }).timeout(100);
+    it("should the queue be consumed properly", async () => {
+        const asap = new ASAP(false);
+        const fn = () => delay(5);
+        const spyFn1 = spy(fn);
+        const spyFn2 = spy(fn);
+        const spyFn3 = spy(fn);
+        const spyFn4 = spy(fn);
+        const prom = Promise.all([
+            asap.q(spyFn1),
+            asap.q(spyFn2),
+            asap.q(spyFn3),
+            asap.q(spyFn4),
+        ]);
+        asap.c = 1;
+        await prom;
+        expect(spyFn2.calledAfter(spyFn1)).to.be.equal(true);
+        expect(spyFn3.calledAfter(spyFn2)).to.be.equal(true);
+        expect(spyFn4.calledAfter(spyFn3)).to.be.equal(true);
+    }).timeout(100);
+    it("should the queue be consumed properly - concurrency of 2", async () => {
+        const asap = new ASAP(false);
+        const spyFn1 = spy(() => delay(40));
+        const spyFn2 = spy(() => delay(35));
+        const spyFn3 = spy(() => delay(30));
+        const spyFn4 = spy(() => delay(25));
+        const spyFn5 = spy(() => delay(20));
+        const spyFn6 = spy(() => delay(15));
+        const spyFn7 = spy(() => delay(10));
+        const spyFn8 = spy(() => delay(5));
+        const spyFn9 = spy(() => delay(5));
+        /**
+         * 1=======4====5===89
+         * 2======3=====6==7=
+         */
+        const prom = Promise.all([
+            asap.q(spyFn1).then(() => {
+                expect(spyFn2.callCount).to.be.equal(1, "#2 not called before #1 finished");
+                expect(spyFn3.callCount).to.be.equal(1, "#3 not called before #1 finished");
+                expect(spyFn4.callCount).to.be.equal(0, "#4 called before #1 finished");
+            }),
+            asap.q(spyFn2).then(() => {
+                expect(spyFn1.callCount).to.be.equal(1, "#1 not called before #2 finished");
+                expect(spyFn3.callCount).to.be.equal(0, "#3 called before #2 finished");
+                expect(spyFn4.callCount).to.be.equal(0, "#4 called before #2 finished");
+            }),
+            asap.q(spyFn3).then(() => {
+                expect(spyFn2.callCount).to.be.equal(1, "#2 not called before #3 finished");
+                expect(spyFn4.callCount).to.be.equal(1, "#4 not called before #3 finished");
+            }),
+            asap.q(spyFn4).then(() => {
+                expect(spyFn3.callCount).to.be.equal(1, "#3 not called before #4 finished");
+            }),
+            asap.q(spyFn5).then(() => {
+                expect(spyFn7.callCount).to.be.equal(1, "#7 not called before #5 finished");
+                expect(spyFn8.callCount).to.be.equal(0, "#8 called before #5 finished");
+            }),
+            asap.q(spyFn6).then(() => {
+                expect(spyFn5.callCount).to.be.equal(1, "#5 not called before #6 finished");
+                expect(spyFn7.callCount).to.be.equal(0, "#7 called before #6 finished");
+                expect(spyFn8.callCount).to.be.equal(0, "#5 called before #6 finished");
+            }),
+            asap.q(spyFn7).then(() => {
+                expect(spyFn8.callCount).to.be.equal(1, "#8 not called before #7 finished");
+            }),
+            asap.q(spyFn8).then(() => {
+                expect(spyFn7.callCount).to.be.equal(1, "#7 not called before #8 finished");
+            }),
+            asap.q(spyFn9),
+        ]);
+        asap.c = 2;
+        await prom;
+    }).timeout(500);
+    it("should the queue be consumed properly - concurrency of 3", async () => {
+        const asap = new ASAP(false);
+        const spyFn1 = spy(() => delay(40));
+        const spyFn2 = spy(() => delay(5));
+        const spyFn3 = spy(() => delay(30));
+        const spyFn4 = spy(() => delay(15));
+        const spyFn5 = spy(() => delay(20));
+        const spyFn6 = spy(() => delay(25));
+        const spyFn7 = spy(() => delay(10));
+        const spyFn8 = spy(() => delay(35));
+        const spyFn9 = spy(() => delay(5));
+        /**
+         * 1=======7=9
+         * 24==5===8======
+         * 3=====6====
+         */
+        const prom = Promise.all([
+            asap.q(spyFn1).then(() => {
+                expect(spyFn2.callCount).to.be.equal(1, "#2 not called before #1 finished");
+                expect(spyFn3.callCount).to.be.equal(1, "#3 not called before #1 finished");
+                expect(spyFn4.callCount).to.be.equal(1, "#4 not called before #1 finished");
+                expect(spyFn5.callCount).to.be.equal(1, "#5 not called before #1 finished");
+                expect(spyFn6.callCount).to.be.equal(1, "#6 not called before #1 finished");
+                expect(spyFn7.callCount).to.be.equal(0, "#7 called before #1 finished");
+                expect(spyFn8.callCount).to.be.equal(0, "#8 called before #1 finished");
+                expect(spyFn9.callCount).to.be.equal(0, "#9 called before #1 finished");
+            }),
+            asap.q(spyFn2).then(() => {
+                expect(spyFn1.callCount).to.be.equal(1, "#1 not called before #2 finished");
+                expect(spyFn2.callCount).to.be.equal(1, "#2 not called before #2 finished");
+                expect(spyFn3.callCount).to.be.equal(1, "#3 not called before #2 finished");
+                expect(spyFn4.callCount).to.be.equal(0, "#4 called before #2 finished");
+            }),
+            asap.q(spyFn3).then(() => {
+                expect(spyFn5.callCount).to.be.equal(1, "#5 not called before #3 finished");
+                expect(spyFn8.callCount).to.be.equal(0, "#8 called before #3 finished");
+            }),
+            asap.q(spyFn4).then(() => {
+                expect(spyFn1.callCount).to.be.equal(1, "#1 not called before #4 finished");
+                expect(spyFn2.callCount).to.be.equal(1, "#2 not called before #4 finished");
+                expect(spyFn3.callCount).to.be.equal(1, "#3 not called before #4 finished");
+                expect(spyFn5.callCount).to.be.equal(0, "#5 called before #4 finished");
+                expect(spyFn6.callCount).to.be.equal(0, "#6 called before #4 finished");
+                expect(spyFn7.callCount).to.be.equal(0, "#7 called before #4 finished");
+            }),
+            asap.q(spyFn5).then(() => {
+                expect(spyFn6.callCount).to.be.equal(1, "#6 not called before #5 finished");
+                expect(spyFn9.callCount).to.be.equal(0, "#9 called before #5 finished");
+            }),
+            asap.q(spyFn6).then(() => {
+                expect(spyFn7.callCount).to.be.equal(1, "#7 not called before #6 finished");
+                expect(spyFn8.callCount).to.be.equal(1, "#8 not called before #6 finished");
+                expect(spyFn9.callCount).to.be.equal(1, "#9 not called before #6 finished");
+            }),
+            asap.q(spyFn7).then(() => {
+                expect(spyFn8.callCount).to.be.equal(1, "#8 not called before #7 finished");
+                expect(spyFn9.callCount).to.be.equal(0, "#9 called before #7 finished");
+            }),
+            asap.q(spyFn8).then(() => {
+                expect(spyFn9.callCount).to.be.equal(1, "#9 not called before #8 finished");
+            }),
+            asap.q(spyFn9),
+        ]);
+        asap.c = 3;
+        await prom;
+    }).timeout(500);
 });

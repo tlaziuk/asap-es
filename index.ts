@@ -64,7 +64,8 @@ function ASAP(this: any, c: boolean | number = 1): any {
      * process the queue
      */
     const process = (): void => {
-        if (pending.size < concurrency) {
+        const { size } = pending;
+        if (size < concurrency) {
             heap.filter(
                 // filter the heap to get only not completed nor pending (running) tasks
                 ([v]) => !complete.has(v) && !pending.has(v),
@@ -73,7 +74,7 @@ function ASAP(this: any, c: boolean | number = 1): any {
                 ([, a], [, b]) => a - b,
             ).slice(
                 0,
-                concurrency, // slice the array to the size of concurrency value
+                concurrency - size, // slice the array to the size of left concurrency value
             ).forEach(([v]) => {
                 // mark the promise function as pending
                 pending.add(v);
