@@ -8,20 +8,23 @@ import { task } from ".";
  * @param reason timeout rejection reason
  */
 export default <T = any>(
-    timeout: number,
+    timeout: number | PromiseLike<number>,
     fn: task<T> | PromiseLike<task<T>>,
-    reason?: string,
-): (() => Promise<T>) => () => Promise.resolve(fn).then(
+    reason?: string | PromiseLike<string>,
+): (() => Promise<T>) => () => Promise.all([timeout, fn, reason as string | undefined]).then(
     // run the logic when task will be ready
-    (taskFn) => new Promise<T>(
+    ([timeoutResolved, taskResolved, reasonResolved]) => new Promise<T>(
         (resolve, reject) => {
             Promise.resolve(
                 // task is ready, yet it may return a promise
-                taskFn(),
-            ).then(resolve, reject);
+                taskResolved(),
+            ).then(
+                resolve,
+                reject,
+            );
             setTimeout(() => {
                 // reject when the timeout is reached
-                reject(new Error(reason));
+                reject(new Error(reasonResolved));
             }, timeout);
         },
     ),
