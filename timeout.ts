@@ -1,4 +1,4 @@
-import { task } from ".";
+import { Task } from ".";
 
 /**
  * reject when the execution exceeds given time
@@ -9,23 +9,24 @@ import { task } from ".";
  */
 export default <T = any>(
     timeout: number | PromiseLike<number>,
-    fn: task<T> | PromiseLike<task<T>>,
+    fn: Task<T> | PromiseLike<Task<T>>,
     reason?: string | PromiseLike<string>,
-): (() => Promise<T>) => () => Promise.all([timeout, fn, reason as string | undefined]).then(
+): (() => Promise<T>) => () => Promise.all([timeout, fn, reason as any]).then(
     // run the logic when task will be ready
     ([timeoutResolved, taskResolved, reasonResolved]) => new Promise<T>(
         (resolve, reject) => {
             Promise.resolve(
                 // task is ready, yet it may return a promise
                 taskResolved(),
-            ).then(
-                resolve,
-                reject,
+            ).then(resolve, reject);
+
+            setTimeout(
+                () => {
+                    // reject when the timeout is reached
+                    reject(new Error(reasonResolved));
+                },
+                timeoutResolved,
             );
-            setTimeout(() => {
-                // reject when the timeout is reached
-                reject(new Error(reasonResolved));
-            }, timeout);
         },
     ),
 );
