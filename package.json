@@ -48,15 +48,15 @@
   "homepage": "https://github.com/tlaziuk/asap-es",
   "devDependencies": {
     "@types/chai": "^4.0.0",
-    "@types/mocha": "~2.2.0",
-    "@types/sinon": "^4.0.0",
+    "@types/mocha": "^5.2.0",
+    "@types/sinon": "^5.0.0",
     "chai": "^4.0.0",
     "coveralls": "^3.0.0",
-    "mocha": "~2.2.0",
-    "nyc": "^11.0.0",
-    "sinon": "^4.0.0",
-    "ts-node": "^4.0.0",
+    "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
+    "sinon": "^5.0.0",
+    "ts-node": "^7.0.0",
     "tslint": "^5.8.0",
-    "typescript": "~2.7.0"
+    "typescript": "^3.0.0"
   }
 }

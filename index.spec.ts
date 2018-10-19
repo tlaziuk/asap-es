@@ -1,16 +1,7 @@
-import {
-    expect,
-} from "chai";
-
-import {
-    SinonSpy,
-    spy,
-    stub,
-} from "sinon";
-
-import ASAP, { task } from "./index";
-
+import { expect } from "chai";
+import { spy } from "sinon";
 import delay from "./delay";
+import ASAP from "./index";
 
 describe(ASAP.name, () => {
     it("should be a class", () => {

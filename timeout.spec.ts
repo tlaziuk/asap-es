@@ -1,11 +1,5 @@
-import {
-    expect,
-} from "chai";
-
-import {
-    spy,
-} from "sinon";
-
+import { expect } from "chai";
+import { spy } from "sinon";
 import ASAP from ".";
 import delay from "./delay";
 import timeout from "./timeout";
@@ -17,6 +11,16 @@ describe(timeout.name || "timeout", () => {
     it("should the task function be called", async () => {
         const taskSpy = spy();
         const taskNew = timeout(0, taskSpy);
+        try {
+            await taskNew();
+        } catch {
+            // pass
+        }
+        expect(taskSpy.callCount).to.be.equal(1);
+    });
+    it("should the task function be called when params are promises", async () => {
+        const taskSpy = spy();
+        const taskNew = timeout(Promise.resolve(0), Promise.resolve(taskSpy));
         try {
             await taskNew();
         } catch {
