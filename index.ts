@@ -8,6 +8,8 @@
  */
 export type Task<T = any> = () => T | PromiseLike<T>;
 
+export type EventFunction<T = any, E extends Error = Error> = (result?: T, error?: E) => void;
+
 export interface IASAP {
     /**
      * concurrency level
@@ -30,6 +32,17 @@ export interface IASAP {
      * ```
      */
     q<T>(fn: Task<T> | PromiseLike<Task<T>>, priority?: number): Promise<T>;
+
+    /**
+     * add a function which will be executed each time when one of the following happens:
+     * * task success
+     * * task failure
+     *
+     * @returns a handle to remove the function
+     */
+    h(fn: EventFunction): symbol;
+
+    r(handle: symbol): void;
 }
 
 function ASAP(this: any, c: boolean | number = 1): any {
