@@ -22,6 +22,7 @@ export default <T = any>(
 
             setTimeout(
                 () => {
+                    // reject when the timeout is reached
                     reject(new Error(reasonResolved));
                 },
                 timeoutResolved,
