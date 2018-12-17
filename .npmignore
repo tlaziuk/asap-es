@@ -22,6 +22,8 @@ node_modules
 #system
 tags
 #project
+**.ts
+!**.d.ts
 **.spec.*
 **.map
 **.json

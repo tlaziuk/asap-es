@@ -120,7 +120,7 @@ function ASAP(this: any, c: boolean | number = 1): any {
     });
 
     // assign passed concurrency to the instance
-    this.c = c;
+    (this as any).c = c;
 }
 
 export default (ASAP as any) as {
