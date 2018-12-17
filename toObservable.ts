@@ -57,11 +57,15 @@ export default (asap: IASAP): IASAP & InteropObservable<any> => {
                 ) {
                     const observer = makeObserver(next, error, complete);
 
-                    const handle = this.h((res, err) => {
-                        if (typeof err !== "undefined") {
-                            observer.error(err);
-                        } else {
-                            observer.next(res);
+                    const handle = this.h((res, err, completed) => {
+                        if (!observer.closed) {
+                            if (completed) {
+                                observer.complete();
+                            } else if (typeof err !== "undefined") {
+                                observer.error(err);
+                            } else {
+                                observer.next(res);
+                            }
                         }
                     });
 

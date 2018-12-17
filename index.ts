@@ -8,7 +8,7 @@
  */
 export type Task<T = any> = () => T | PromiseLike<T>;
 
-export type EventFunction<T = any, E extends Error = Error> = (result?: T, error?: E) => void;
+export type EventFunction<T = any, E = any> = (result?: T, error?: E, completed?: true) => void;
 
 export interface IASAP {
     /**
